@@ -34,7 +34,7 @@ def DataLoader(path, sheet):
 
 
 # Specify path and sheet name in the prostate workbook
-filePath = 'C:/Users/PeterBakke/Documents/dtu/02450-intro-to-machine-learning/prostate.xlsx'
+filePath = 'C:/Users/PeterBakke/Documents/dtu/02450-intro-to-machine-learning/Code-lib/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
 # load prostate data into dataFrame
