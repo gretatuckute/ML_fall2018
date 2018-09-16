@@ -9,13 +9,12 @@ to use for the project in 02450 Intro to Machine Learning
 
 To-do:
 We need to fix the indexing of the columns - the way it is implemented right now something strange happens
-
+Encode certain columns differently, e.g. lcp and lbsa
 
 Author: Peter Bakke
-Reviewed by: xxx
-Last modified: 
+Reviewed by: Greta Tuckute
+Last modified: 16/09/18, 17.40
 """
-
 
 
 def DataLoader(path, sheet):
@@ -34,7 +33,8 @@ def DataLoader(path, sheet):
 
 
 # Specify path and sheet name in the prostate workbook
-filePath = 'C:/Users/PeterBakke/Documents/dtu/02450-intro-to-machine-learning/Code-lib/ML_fall2018/Data/Prostate.xlsx'
+# filePath = 'C:/Users/PeterBakke/Documents/dtu/02450-intro-to-machine-learning/Code-lib/ML_fall2018/Data/Prostate.xlsx'
+filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
 # load prostate data into dataFrame
@@ -50,8 +50,6 @@ classLabels = myData['gleason'].values.tolist()
 classNames = sorted(set(classLabels))
 classDict = dict(zip(classNames, range(4)))
 
-
-
 # Extract vector y, convert to NumPy array
 y = np.asarray([classDict[value] for value in classLabels])
 
@@ -63,33 +61,27 @@ N = len(y)
 M = len(attributeNames)
 C = len(classNames)
 
-
-
 # Data attributes to be plotted
-i = 3
-j = 8
+i = 2
+j = 3
 
-
-
-# Make another more fancy plot that includes legend, class labels,
-# attribute names, and a title.
+# Plotting the data set (different attributes to be specified)
 f = plt.figure()
-plt.title('Prostate data')
+plt.title('Prostate data of attributes: ' + str(attributeNames[i]) + ' vs. ' + str(attributeNames[j]))
 
 for c in range(C):
     # select indices belonging to class c:
     class_mask = y==c
     plt.plot(X[class_mask,i], X[class_mask,j], 'o')
 
-plt.legend(classNames)
+#plt.legend(classNames)
+gleason_legend = ['Gleason Score 6', 'Gleason Score 7', 'Gleason Score 8', 'Gleason Score 9']
+plt.legend(gleason_legend)
 plt.xlabel(attributeNames[i])
 plt.ylabel(attributeNames[j])
 
 # Output result to screen
 plt.show()
-
-
-
 
 #Subtract mean value from data
 Y = X - np.ones((N,1))*X.mean(axis=0)
@@ -110,10 +102,9 @@ plt.xlabel('Principal component');
 plt.ylabel('Variance explained');
 plt.show()
 
-
 # Indices of the principal components to be plotted
-i = 0
-j = 1
+ii = 0
+jj = 1
 
 # Plot PCA of the data
 f = plt.figure()
@@ -122,10 +113,10 @@ plt.title('Prostate data: PCA')
 for c in range(C):
     # select indices belonging to class c:
     class_mask = y==c
-    plt.plot(Z[class_mask,i], Z[class_mask,j], 'o')
+    plt.plot(Z[class_mask,ii], Z[class_mask,jj], 'o')
 plt.legend(classNames)
-plt.xlabel('PC{0}'.format(i+1))
-plt.ylabel('PC{0}'.format(j+1))
+plt.xlabel('PC{0}'.format(ii+1))
+plt.ylabel('PC{0}'.format(jj+1))
 
 # Output result to screen
 plt.show()
