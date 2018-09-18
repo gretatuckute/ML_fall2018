@@ -33,8 +33,8 @@ def DataLoader(path, sheet):
 
 
 # Specify path and sheet name in the prostate workbook
-# filePath = 'C:/Users/PeterBakke/Documents/dtu/02450-intro-to-machine-learning/Code-lib/ML_fall2018/Data/Prostate.xlsx'
-filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
+filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
+#filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
 # load prostate data into dataFrame
@@ -62,8 +62,8 @@ M = len(attributeNames)
 C = len(classNames)
 
 # Data attributes to be plotted
-i = 2
-j = 3
+i = 5
+j = 8
 
 # Plotting the data set (different attributes to be specified)
 f = plt.figure()
@@ -121,3 +121,10 @@ plt.ylabel('PC{0}'.format(jj+1))
 # Output result to screen
 plt.show()
 
+
+# Make Boxplots
+plt.figure()
+plt.boxplot(Y)
+plt.title('Boxplots of demeaned data');
+plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
+plt.show()
