@@ -12,7 +12,7 @@ We need to fix the indexing of the columns - the way it is implemented right now
 Encode certain columns differently, e.g. lcp and lbsa
 
 Author: Peter Bakke
-Reviewed by: Greta Tuckute
+Reviewed by: Greta Tuckute hej
 Last modified: 16/09/18, 17.40
 """
 
