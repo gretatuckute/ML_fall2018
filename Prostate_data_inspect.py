@@ -33,8 +33,9 @@ def DataLoader(path, sheet):
 
 
 # Specify path and sheet name in the prostate workbook
-filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
+#filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
 #filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
+filePath = 'C:/Users/narisa/Documents/GitHub/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
 # load prostate data into dataFrame
@@ -133,11 +134,37 @@ plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
 plt.grid(axis='y',linestyle='dashed')
 plt.show()
 
+# Summary statistics
+# Create dict of attribute dictonaries using comprehensions
+keys = ['mean', 'std', 'median', 'range', 'Q_25', 'Q_75']
 
+statistics={name:{key:[] for key in keys} for name in attributeNames}
 
+k=0
+for attribute in statistics:
+    statistics[attribute]['mean'] = X[:,k].mean()
+    statistics[attribute]['std'] = X[:,k].std(ddof=1)
+    statistics[attribute]['median'] = np.median(X[:,k])
+    statistics[attribute]['range'] = X[:,k].max()-X[:,k].min()
+    statistics[attribute]['Q_25'] = np.percentile(X[:,k],25)
+    statistics[attribute]['Q_75'] = np.percentile(X[:,k],75)
+    k=k+1
+
+# Create Boxplot of raw data
+plt.figure()
+plt.boxplot(X)
+plt.title('Boxplots of raw data');
+plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
+plt.grid(axis='y',linestyle='dashed')
+plt.show()    
 
 # Calculate projections of Y on Eqigenvector
-
+plt.figure()
+plt.boxplot(Y)
+plt.title('Boxplots of demeaned data');
+plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
+plt.grid(axis='y',linestyle='dashed')
+plt.show()
 
 print(V[:,1].T)
 ## Projection of water class onto the 2nd principal component.
