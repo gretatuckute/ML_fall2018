@@ -140,15 +140,15 @@ keys = ['mean', 'std', 'median', 'range', 'Q_25', 'Q_75']
 
 statistics={name:{key:[] for key in keys} for name in attributeNames}
 
-k=0
+
 for attribute in statistics:
+    k = attributeNames.index(attribute)
     statistics[attribute]['mean'] = X[:,k].mean()
     statistics[attribute]['std'] = X[:,k].std(ddof=1)
     statistics[attribute]['median'] = np.median(X[:,k])
     statistics[attribute]['range'] = X[:,k].max()-X[:,k].min()
     statistics[attribute]['Q_25'] = np.percentile(X[:,k],25)
     statistics[attribute]['Q_75'] = np.percentile(X[:,k],75)
-    k=k+1
 
 # Create Boxplot of raw data
 plt.figure()
