@@ -122,9 +122,31 @@ plt.ylabel('PC{0}'.format(jj+1))
 plt.show()
 
 
+
+
+
 # Make Boxplots
 plt.figure()
 plt.boxplot(Y)
 plt.title('Boxplots of demeaned data');
 plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
+plt.grid(axis='y',linestyle='dashed')
 plt.show()
+
+
+
+
+# Calculate projections of Y on Eqigenvector
+
+
+print(V[:,1].T)
+## Projection of water class onto the 2nd principal component.
+
+# When Y and V have type numpy.array, then @ is matrix multiplication
+print( Y[y==4,:] @ V[:,1] )
+
+# or convert V to a numpy.mat and use * (matrix multiplication for numpy.mat)
+#print((Y[y==4,:] * np.mat(V[:,1]).T).T)
+
+
+print('Ran Exercise 2.1.5')
