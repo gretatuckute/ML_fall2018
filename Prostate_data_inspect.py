@@ -94,6 +94,8 @@ Z = np.dot(Y, V.T)
 # Compute variance explained by principal components
 rho = (S*S) / (S*S).sum()
 
+print(rho)
+
 # Plot variance explained
 plt.figure()
 plt.plot(range(1,len(rho)+1),rho,'o-')
@@ -117,6 +119,20 @@ for c in range(C):
 plt.legend(classNames)
 plt.xlabel('PC{0}'.format(ii+1))
 plt.ylabel('PC{0}'.format(jj+1))
+
+
+# Plot PCA_ii of the data against lpsa
+f = plt.figure()
+plt.title('Prostate data: PCA against lpsa')
+#Z = array(Z)
+for c in range(C):
+    # select indices belonging to class c:
+    class_mask = y==c
+    plt.plot(Z[class_mask,ii], Y[class_mask,8], 'o')
+plt.legend(classNames)
+plt.xlabel('PC{0}'.format(ii+1))
+plt.ylabel('lpsa')
+
 
 # Output result to screen
 plt.show()
