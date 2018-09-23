@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy.linalg import svd
-
+from similarity import similarity
 
 """
 The purpose of this application is to inspect the prostate dataset that we intend
@@ -158,6 +158,38 @@ plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
 plt.grid(axis='y',linestyle='dashed')
 plt.show()    
 
+#Covariance and correlation
+# Covariance of X
+covariance_X = np.cov(X)
+#print(covariance_X)
+#correlation of X
+correlation_X = numpy.corrcoef(X)
+#print(correlation_X)
+
+#Similatiry
+
+# Attribute to use as query
+
+# Similarity: 'SMC', 'Jaccard', 'ExtendedJaccard', 'Cosine', 'Correlation' 
+similarity_measure = 'cos'
+
+N, M = X.shape
+# Search for similar attributes
+# Index of all other attributes than i
+
+for i in [0,1,2,3,4,5,6,7,8]:
+    noti = list(range(0,i)) + list(range(i+1,M)) 
+    # Compute similarity between attribute i and all others
+    sim = similarity(X[:,i], X[:,noti].T, similarity_measure)
+    sim = sim.tolist()[0]
+    # Tuples of sorted similarities and their attribute name
+    Name = []
+    for number in noti:
+        Name.append(attributeNames[number])
+    sim_to_index = sorted(zip(sim, Name))
+    print('Similarity of ', attributeNames[i], 'to:')
+    print(sim_to_index)
+
 # Calculate projections of Y on Eqigenvector
 plt.figure()
 plt.boxplot(Y)
@@ -174,6 +206,7 @@ print( Y[y==4,:] @ V[:,1] )
 
 # or convert V to a numpy.mat and use * (matrix multiplication for numpy.mat)
 #print((Y[y==4,:] * np.mat(V[:,1]).T).T)
+
 
 
 print('Ran Exercise 2.1.5')
