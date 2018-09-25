@@ -33,9 +33,9 @@ def DataLoader(path, sheet):
 
 
 # Specify path and sheet name in the prostate workbook
-#filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
+filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
 #filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
-filePath = 'C:/Users/narisa/Documents/GitHub/ML_fall2018/Data/Prostate.xlsx'
+#filePath = 'C:/Users/narisa/Documents/GitHub/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
 # load prostate data into dataFrame
@@ -63,7 +63,7 @@ M = len(attributeNames)
 C = len(classNames)
 
 # Data attributes to be plotted
-i = 5
+i = 0
 j = 8
 
 # Plotting the data set (different attributes to be specified)
