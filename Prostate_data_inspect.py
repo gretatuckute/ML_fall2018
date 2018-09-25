@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
+from scipy.stats import zscore
 from scipy.linalg import svd
 from similarity import similarity
 
@@ -9,13 +10,13 @@ to use for the project in 02450 Intro to Machine Learning
 
 To-do:
 We need to fix the indexing of the columns - the way it is implemented right now something strange happens
-Encode certain columns differently, e.g. lcp and lbsa
 
 Author: Peter Bakke
-Reviewed by: Greta Tuckute hej
-Last modified: 16/09/18, 17.40
+Reviewed by: Greta Tuckute 
+Last modified: 24/09/18, 17.40
 """
 
+######## LOADING DATA ##########
 
 def DataLoader(path, sheet):
     """
@@ -31,10 +32,14 @@ def DataLoader(path, sheet):
 
     return out
 
-
 # Specify path and sheet name in the prostate workbook
+<<<<<<< HEAD
 filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
 #filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
+=======
+#filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
+filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
+>>>>>>> aa3137443e012170a83654655896a1d17d295b5c
 #filePath = 'C:/Users/narisa/Documents/GitHub/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
@@ -57,6 +62,9 @@ y = np.asarray([classDict[value] for value in classLabels])
 # Convert dataFrame to numpy array
 X = myData.values
 
+#%% 
+############### Plotting attribute vs. attribute ##################
+
 # Compute values of N, M and C
 N = len(y)
 M = len(attributeNames)
@@ -64,7 +72,11 @@ C = len(classNames)
 
 # Data attributes to be plotted
 i = 0
+<<<<<<< HEAD
 j = 8
+=======
+j = 6
+>>>>>>> aa3137443e012170a83654655896a1d17d295b5c
 
 # Plotting the data set (different attributes to be specified)
 f = plt.figure()
@@ -83,6 +95,9 @@ plt.ylabel(attributeNames[j])
 
 # Output result to screen
 plt.show()
+
+#%% 
+########## Standardizing data, SVD, PCA and variance ###########
 
 #Subtract mean value from data
 Y = X - np.ones((N,1))*X.mean(axis=0)
@@ -111,7 +126,7 @@ jj = 1
 
 # Plot PCA of the data
 f = plt.figure()
-plt.title('Prostate data: PCA')
+plt.title('Prostate data: PC' + str(ii+1) + ' vs. '+ 'PC' + str(jj+1))
 #Z = array(Z)
 for c in range(C):
     # select indices belonging to class c:
@@ -124,7 +139,7 @@ plt.ylabel('PC{0}'.format(jj+1))
 
 # Plot PCA_ii of the data against lpsa
 f = plt.figure()
-plt.title('Prostate data: PCA against lpsa')
+plt.title('Prostate data: PC' + str(ii+1) + ' against lpsa')
 #Z = array(Z)
 for c in range(C):
     # select indices belonging to class c:
@@ -134,13 +149,24 @@ plt.legend(classNames)
 plt.xlabel('PC{0}'.format(ii+1))
 plt.ylabel('lpsa')
 
+# Plot PCA_ii of the data against Gleason
+f = plt.figure()
+plt.title('Prostate data: PC' + str(ii+1) + ' against lpsa')
+#Z = array(Z)
+for c in range(C):
+    # select indices belonging to class c:
+    class_mask = y==c
+    plt.plot(Z[class_mask,ii], Y[class_mask,6], 'o')
+plt.legend(classNames)
+plt.xlabel('PC{0}'.format(ii+1))
+plt.ylabel('Gleason score')
+
 
 # Output result to screen
 plt.show()
 
-
-
-
+#%%
+############ Data boxplots and summary statistics ############
 
 # Make Boxplots
 plt.figure()
@@ -155,7 +181,6 @@ plt.show()
 keys = ['mean', 'std', 'median', 'range', 'Q_25', 'Q_75']
 
 statistics={name:{key:[] for key in keys} for name in attributeNames}
-
 
 for attribute in statistics:
     k = attributeNames.index(attribute)
@@ -179,15 +204,17 @@ plt.show()
 covariance_X = np.cov(X)
 #print(covariance_X)
 #correlation of X
-correlation_X = numpy.corrcoef(X)
+correlation_X = np.corrcoef(X)
 #print(correlation_X)
 
-#Similatiry
+
+#%%
+########## Similarity analysis ###########
 
 # Attribute to use as query
 
 # Similarity: 'SMC', 'Jaccard', 'ExtendedJaccard', 'Cosine', 'Correlation' 
-similarity_measure = 'cos'
+similarity_measure = 'correlation'
 
 N, M = X.shape
 # Search for similar attributes
@@ -205,6 +232,24 @@ for i in [0,1,2,3,4,5,6,7,8]:
     sim_to_index = sorted(zip(sim, Name))
     print('Similarity of ', attributeNames[i], 'to:')
     print(sim_to_index)
+    
+# Z-scoring (standardizing) the data (X) in order to compute more meaningful similarity measures
+    
+X_zscore = zscore(X)
+
+for i in [0,1,2,3,4,5,6,7,8]:
+    noti = list(range(0,i)) + list(range(i+1,M)) 
+    # Compute similarity between attribute i and all others
+    sim = similarity(X_zscore[:,i], X_zscore[:,noti].T, similarity_measure)
+    sim = sim.tolist()[0]
+    # Tuples of sorted similarities and their attribute name
+    Name = []
+    for number in noti:
+        Name.append(attributeNames[number])
+    sim_to_index = sorted(zip(sim, Name))
+    print('Similarity of ', attributeNames[i], 'to:')
+    print(sim_to_index)
+    
 
 # Calculate projections of Y on Eqigenvector
 plt.figure()
@@ -223,6 +268,3 @@ print( Y[y==4,:] @ V[:,1] )
 # or convert V to a numpy.mat and use * (matrix multiplication for numpy.mat)
 #print((Y[y==4,:] * np.mat(V[:,1]).T).T)
 
-
-
-print('Ran Exercise 2.1.5')
