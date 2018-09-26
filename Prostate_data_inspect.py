@@ -33,13 +33,13 @@ def DataLoader(path, sheet):
     return out
 
 # Specify path and sheet name in the prostate workbook
-<<<<<<< HEAD
+#%%
 filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
 #filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
-=======
+#=======
 #filePath = 'C:/Users/PeterBakke/Documents/git/ML_fall2018/Data/Prostate.xlsx'
-filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
->>>>>>> aa3137443e012170a83654655896a1d17d295b5c
+#filePath = 'C:/Users/Greta/Documents/Github/ML_fall2018/Data/Prostate.xlsx'
+#%%
 #filePath = 'C:/Users/narisa/Documents/GitHub/ML_fall2018/Data/Prostate.xlsx'
 sheet = 'Sheet1'
 
@@ -72,11 +72,11 @@ C = len(classNames)
 
 # Data attributes to be plotted
 i = 0
-<<<<<<< HEAD
+#<<<<<<< HEAD
 j = 8
-=======
-j = 6
->>>>>>> aa3137443e012170a83654655896a1d17d295b5c
+#=======
+#j = 6
+#>>>>>>> aa3137443e012170a83654655896a1d17d295b5c
 
 # Plotting the data set (different attributes to be specified)
 f = plt.figure()
@@ -122,7 +122,7 @@ plt.show()
 
 # Indices of the principal components to be plotted
 ii = 0
-jj = 1
+jj = 7
 
 # Plot PCA of the data
 f = plt.figure()
