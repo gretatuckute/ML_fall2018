@@ -47,7 +47,7 @@ del myData['train']
 
 # extract class names and encode with integers (dict)
 attributeNames = list(myData.columns.values)
-classLabels = myData['gleason'].values.tolist()
+classLabels = myData['Gleason'].values.tolist()
 classNames = sorted(set(classLabels))
 classDict = dict(zip(classNames, range(4)))
 
@@ -66,8 +66,8 @@ M = len(attributeNames)
 C = len(classNames)
 
 # Data attributes to be plotted
-i = 0
-j = 6
+i = 5
+j = 8
 
 # Plotting the data set (different attributes to be specified)
 f = plt.figure()
