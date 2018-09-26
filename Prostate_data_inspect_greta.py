@@ -225,13 +225,13 @@ for i in [0,1,2,3,4,5,6,7,8]:
     print(sim_to_index)
     
 # Z-scoring (standardizing) the data (X) in order to compute more meaningful similarity measures
-    
+
 X_zscore = zscore(X)
 
-for i in [0,1,2,3,4,5,6,7,8]:
-    noti = list(range(0,i)) + list(range(i+1,M)) 
+for i in [0, 1, 2, 3, 4, 5, 6, 7, 8]:
+    noti = list(range(0, i)) + list(range(i + 1, M))
     # Compute similarity between attribute i and all others
-    sim = similarity(X_zscore[:,i], X_zscore[:,noti].T, similarity_measure)
+    sim = similarity(X_zscore[:, i], X_zscore[:, noti].T, similarity_measure)
     sim = sim.tolist()[0]
     # Tuples of sorted similarities and their attribute name
     Name = []
@@ -240,14 +240,13 @@ for i in [0,1,2,3,4,5,6,7,8]:
     sim_to_index = sorted(zip(sim, Name))
     print('Similarity of', attributeNames[i], 'to:')
     print(sim_to_index)
-    
 
 # Calculate projections of Y on Eqigenvector
 plt.figure()
 plt.boxplot(Y)
 plt.title('Boxplots of demeaned data');
-plt.xticks([1,2,3,4,5,6,7,8],attributeNames)
-plt.grid(axis='y',linestyle='dashed')
+plt.xticks([1, 2, 3, 4, 5, 6, 7, 8], attributeNames)
+plt.grid(axis='y', linestyle='dashed')
 plt.show()
 
 print(V[:,1].T)
