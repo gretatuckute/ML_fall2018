@@ -1,0 +1,221 @@
+
+digraph G {
+
+
+
+
+        rankdir=TD
+
+	splines=line
+
+        graph [pad="0.5", ranksep="1", nodesep="0.3"];
+
+        node [fixedsize=true, label=""];
+
+
+
+        subgraph cluster_0 {
+
+		color=white;
+
+		node [style=solid,color=blue4, shape=circle, fontsize=10];
+
+		x1 [label="lCaVol"] 
+		x2 [label="lWeight"]  
+		x3 [label="Age"]
+		x4 [label="lBPH"]
+		x5 [label="lCP"]
+		x6 [label="Gleason"]
+		x7 [label="PGG45"]
+		x8 [label="lPSA"];
+
+		label = "";
+
+	}
+
+
+
+	subgraph cluster_1 {
+
+		color=white;
+
+		node [style=solid,color=red2, shape=circle, fontsize=10];
+
+		a12 [label="h1"]
+		a22 [label="h2"]
+		a32 [label="h3"]
+		a42 [label="h4"]
+		a52 [label="h5"]
+		a62 [label="h6"]
+		a72 [label="h7"]
+		a82 [label="h8"]
+		a92 [label="h9"]
+		a102[label="h10"];
+
+		label = "";
+
+	}
+
+
+
+	subgraph cluster_2 {
+
+		color=white;
+
+		node [style=solid,color=seagreen2, shape=circle, fontsize=10];
+
+		O [label="out"];
+
+		label="";
+
+	}
+
+	
+	subgraph cluster_3 {
+		color=white;
+		node [style=solid,color=seagreen2, shape=square, fontsize=10];
+		y [label="y_hat"];
+		label="";
+	}
+
+
+
+
+        x1 -> a12;
+
+        x1 -> a22;
+
+        x1 -> a32;
+        x1 -> a42;
+         x1 -> a52;
+         x1 -> a62;
+         x1 -> a72;
+         x1 -> a82;	
+         x1 -> a92;
+         x1 -> a102;
+
+
+
+        x2 -> a12;
+        x2 -> a22;
+        x2 -> a32;
+        x2 -> a42;
+         x2 -> a52;
+         x2 -> a62;
+         x2 -> a72;
+         x2 -> a82;	
+         x2 -> a92;
+         x2 -> a102;
+
+
+
+
+
+
+
+
+        x3 -> a12;
+        x3 -> a22;
+        x3 -> a32;
+        x3 -> a42;
+         x3 -> a52;
+         x3 -> a62;
+         x3 -> a72;
+         x3 -> a82;	
+         x3 -> a92;
+         x3 -> a102;
+
+
+
+
+        x4 -> a12;
+        x4 -> a22;
+        x4 -> a32;
+        x4 -> a42;
+         x4 -> a52;
+         x4 -> a62;
+         x4 -> a72;
+         x4 -> a82;	
+         x4 -> a92;
+         x4 -> a102;
+
+
+        x5 -> a12;
+        x5 -> a22;
+        x5 -> a32;
+        x5 -> a42;
+         x5 -> a52;
+         x5 -> a62;
+         x5 -> a72;
+         x5 -> a82;	
+         x5 -> a92;
+         x5 -> a102;
+
+
+
+
+        x6 -> a12;
+        x6 -> a22;
+        x6 -> a32;
+        x6 -> a42;
+         x6 -> a52;
+         x6 -> a62;
+         x6 -> a72;
+         x6 -> a82;	
+         x6 -> a92;
+         x6 -> a102;
+
+
+
+
+        x7 -> a12;
+        x7 -> a22;
+        x7 -> a32;
+        x7 -> a42;
+         x7 -> a52;
+         x7 -> a62;
+         x7 -> a72;
+         x7 -> a82;	
+         x7 -> a92;
+         x7 -> a102;
+
+
+
+
+        x8 -> a12;
+        x8 -> a22;
+        x8 -> a32;
+        x8 -> a42;
+         x8 -> a52;
+         x8 -> a62;
+         x8 -> a72;
+         x8 -> a82;	
+         x8 -> a92;
+         x8 -> a102;
+
+
+
+
+
+
+
+
+
+       	a12 -> O;
+
+    	a22 -> O;
+
+        	a32 -> O;
+	a42 -> O;
+	a52 -> O;
+	a62 -> O;
+	a72 -> O;
+	a82 -> O;
+	a92 -> O;
+	a102 -> O;
+
+	O -> y;
+
+        
+
+}
