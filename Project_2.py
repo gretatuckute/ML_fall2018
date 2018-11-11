@@ -231,7 +231,7 @@ attributeNamesNew = ['lCaVol', 'lWeight', 'Age', 'lBPH', 'lCP','Gleason 6.0', 'G
 # In[64]:
 
 
-b = dummy.DummyRegressor(strategy='mean')
+#b = dummy.DummyRegressor(strategy='mean')
 
 
 # In[65]:
