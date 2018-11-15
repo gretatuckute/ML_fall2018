@@ -1,11 +1,23 @@
 """
-Method for plotting one attribute against another
+Everything related to plotting data
 """
 
 import matplotlib.pyplot as plt
+import os
 
 
-def plot_attributes_2d(X, y, C, classNames, attributeNames, i=0, j=1):
+def plot_attributes_2d(X, y, C, classNames, attributeNames, i=0, j=1, saveFigure=False):
+    """
+    Method for plotting different attributes against each other
+    :param X:
+    :param y:
+    :param C:
+    :param classNames:
+    :param attributeNames:
+    :param i:
+    :param j:
+    :return:
+    """
     # Plotting the data set (different attributes to be specified)
     plt.figure()
 
@@ -24,8 +36,8 @@ def plot_attributes_2d(X, y, C, classNames, attributeNames, i=0, j=1):
     plt.rc('xtick', labelsize=24)
     plt.rc('ytick', labelsize=24)
 
-
-    #plt.savefig("C:/Users/narisa/Documents/GitHub/ML_fall2018/Figures/" + attributeNames[i] +  "_vs_" + attributeNames[j]+".png")
+    if saveFigure == True:
+        plt.savefig('./ML_fall2018/Figures/' + attributeNames[i] +  "_vs_" + attributeNames[j]+".png")
 
     # Output result to screen
     plt.show()

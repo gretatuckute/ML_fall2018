@@ -29,6 +29,13 @@ print('X has shape {}'.format(np.shape(X)))
 print('y has shape {}'.format(np.shape(y)))
 
 
-ML_plotter.plot_attributes_2d(i=0, j=1, X=X, y=y, C=C, classNames=classNames, attributeNames=attributeNames)
+ML_plotter.plot_attributes_2d(i=0,
+                              j=1,
+                              X=X,
+                              y=y,
+                              C=C,
+                              classNames=classNames,
+                              attributeNames=attributeNames,
+                              saveFigure=False)
 
 
