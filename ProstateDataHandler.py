@@ -33,6 +33,13 @@ class ProstateData:
         attributeNames = ['lCaVol', 'lWeight', 'Age', 'lBPH', 'lCP','Gleason 6.0', 'Gleason 7.0', 'Gleason 8.0', 'Gleason 9.0','SVI']
         return attributeNames
 
+    def get_classLabels(self):
+        data = self.raw_data
+        classLabels = data['SVI'].values.tolist()
+        classNames = sorted(set(classLabels))
+        classDict = dict(zip(classNames, range(4)))
+        return classLabels, classNames, classDict
+
     def get_ClassificationFeatureData(self):
         data = self.raw_data
         X = data.values
@@ -56,6 +63,7 @@ if __name__ == '__main__':
     myData = ProstateData()
     raw_data = myData.get_rawData()
     attributeNames = myData.get_attributeNames()
+    classLabels, classNames, classDict = myData.get_classLabels()
     N, M, X, y = myData.get_ClassificationFeatureData()
     print(raw_data.head(5))
     print(attributeNames)
