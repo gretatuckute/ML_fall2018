@@ -18,7 +18,6 @@ class ProstateData:
         self.file = './Data/Prostate.xlsx'
         self.sheet = 'Sheet1'
         self.raw_data = self.load()
-        print(self.file)
 
     def load(self):
         data = pd.read_excel(self.file, sheet_name=self.sheet)
@@ -31,8 +30,7 @@ class ProstateData:
         return data
 
     def get_attributeNames(self):
-        data = self.raw_data
-        attributeNames = list(data.columns.values)
+        attributeNames = ['lCaVol', 'lWeight', 'Age', 'lBPH', 'lCP','Gleason 6.0', 'Gleason 7.0', 'Gleason 8.0', 'Gleason 9.0','SVI']
         return attributeNames
 
     def get_ClassificationFeatureData(self):
