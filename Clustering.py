@@ -8,6 +8,9 @@ from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 
 
 class HierarchicalCluster:
+    """
+    Class to handle everything related to hierarchical clustering in project 3 of 02450 Intro to Machine Learning
+    """
     def __init__(self,
                  X=None,
                  y=None,
@@ -19,6 +22,20 @@ class HierarchicalCluster:
                  max_cluster=4,
                  method='single',
                  metric='euclidean'):
+        """
+        init method executed when creating object
+
+        :param X: Feature data
+        :param y: True labels
+        :param AttributeNames: list of Attrigute names
+        :param classNames: list of Class names
+        :param N: Number of observations
+        :param M: Number of features
+        :param C: Number of classes
+        :param max_cluster: maximum number of clusters
+        :param method: Linkage function, either 'single' 'complete', or 'average', default 'single'
+        :param metric: Dissimilarity measure, default 'euclidian'
+        """
         print('Clustering object initialized')
         self.X = X
         self.y = y
@@ -35,6 +52,11 @@ class HierarchicalCluster:
         return cls
 
     def display_cluster_plot(self, max_cluster=None):
+        """
+        Display a cluster plot
+        :param max_cluster: maximum number of clusters
+        :return: plot
+        """
         if max_cluster == None:
             max_cluster = self.max_cluster
 
@@ -49,6 +71,14 @@ class HierarchicalCluster:
                           truncate_method='level',
                           orientation='right',
                           color_threshold=5):
+        """
+        Display a dendogram
+        :param max_display_levels: maximum number of observations in bottom of hierarchy
+        :param truncate_method:
+        :param orientation: orientation of dendogram, default left-right
+        :param color_threshold:
+        :return:
+        """
         plt.figure()
         dendrogram(Z=self.Z,
                    truncate_mode=truncate_method,
