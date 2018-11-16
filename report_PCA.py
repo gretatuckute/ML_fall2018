@@ -19,12 +19,12 @@ class prostatePCA:
 
     def display_pca(self):
         Z = self.get_principal_components()
-        plt.figure(0)
+        plt.figure()
         plt.scatter(Z[:,0],Z[:,1])
         plt.xlabel('PC1')
         plt.ylabel('PC2')
         plt.title('PC1 vs PC2')
-        plt.show(0)
+        plt.show()
 
 
 

@@ -39,9 +39,9 @@ class HierarchicalCluster:
             max_cluster = self.max_cluster
 
         cls = self._compute_clusters(max_cluster)
-        plt.figure(0)
+        plt.figure()
         clusterplot(X=self.X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y)
-        plt.show(0)
+        plt.show()
         return 'Cluster plot displayed'
 
     def display_dendogram(self,
@@ -49,13 +49,13 @@ class HierarchicalCluster:
                           truncate_method='level',
                           orientation='right',
                           color_threshold=5):
-        plt.figure(1)
+        plt.figure()
         dendrogram(Z=self.Z,
                    truncate_mode=truncate_method,
                    p=max_display_levels,
                    orientation=orientation,
                    color_threshold=color_threshold)
-        plt.show(1)
+        plt.show()
         return print('Dendrogram displayed')
 
 

@@ -1,6 +1,7 @@
 import ProstateDataHandler
 import numpy as np
 import seaborn as sns
+import report_PCA
 import ML_plotter
 from Clustering import HierarchicalCluster
 
@@ -40,6 +41,10 @@ ML_plotter.plot_attributes_2d(i=0,
                               saveFigure=False)
 '''
 
-prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y)
+prostatePCA = report_PCA.prostatePCA(X=X)
+X_pca = prostatePCA.get_principal_components(n_pca=2)
+prostatePCA.display_pca()
+
+prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='average')
 prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
 prostate_hierarchical_clustering.display_dendogram(max_display_levels=100)
