@@ -41,4 +41,5 @@ ML_plotter.plot_attributes_2d(i=0,
 '''
 
 prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y)
-prostate_hierarchical_clustering.
+prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
+prostate_hierarchical_clustering.display_dendogram(max_display_levels=100)
