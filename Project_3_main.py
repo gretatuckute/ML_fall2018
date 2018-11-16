@@ -8,29 +8,19 @@ from Clustering import HierarchicalCluster
 # Nicer formatting of plots
 sns.set_style("darkgrid")
 
-
-print('Creating DataHandler object')
+# Creating object to handle data load and feature transformation
 myData = ProstateDataHandler.ProstateData()
-
-print('Importing raw data')
 raw_data = myData.get_rawData()
 
-print('Collecting Attribute names and class labels')
+# Preparing attribute names
 attributeNames = myData.get_attributeNames()
 classLabels, classNames, classDict = myData.get_classLabels()
 C = len(classNames)
 
-print('Attribute Names in data set are: {}'. format(attributeNames))
-
-print('Preparing data for classification')
+# Generating X & Y and dimensionality
 N, M, X, y = myData.get_ClassificationFeatureData()
 
-print('There are {} features in the data set'.format(M))
-print('There are {} observations in the data set'.format(N))
-print('X has shape {}'.format(np.shape(X)))
-print('y has shape {}'.format(np.shape(y)))
-
-'''
+# Plotting two features against each other
 ML_plotter.plot_attributes_2d(i=0,
                               j=1,
                               X=X,
@@ -39,12 +29,20 @@ ML_plotter.plot_attributes_2d(i=0,
                               classNames=classNames,
                               attributeNames=attributeNames,
                               saveFigure=False)
-'''
 
+
+# Creating a PCA object
 prostatePCA = report_PCA.prostatePCA(X=X)
+
+# Projecting the data down to the first two principal components (easier plotting)
 X_pca = prostatePCA.get_principal_components(n_pca=2)
+
+# Displaying the first two principal components against each other
 prostatePCA.display_pca()
 
+# Perform hierarchical clustering
 prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='average')
 prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
 prostate_hierarchical_clustering.display_dendogram(max_display_levels=100)
+
+

@@ -32,6 +32,7 @@ class ProstateData:
 
     def get_attributeNames(self):
         attributeNames = ['lCaVol', 'lWeight', 'Age', 'lBPH', 'lCP','Gleason 6.0', 'Gleason 7.0', 'Gleason 8.0', 'Gleason 9.0','SVI']
+        print('Attribute Names in data set are: {}'.format(attributeNames))
         return attributeNames
 
     def get_classLabels(self):
@@ -57,6 +58,10 @@ class ProstateData:
         X_classification = X_k[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
         y_classification = X_k[:, 10]
         N, M = X_classification.shape
+        print('There are {} features in the data set'.format(M))
+        print('There are {} observations in the data set'.format(N))
+        print('X has shape {}'.format(np.shape(X_classification)))
+        print('y has shape {}'.format(np.shape(y_classification)))
         return N, M, X_classification, y_classification
 
 
