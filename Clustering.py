@@ -7,7 +7,7 @@ from toolbox_02450 import clusterplot
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 
 
-class HierarchicalClustering:
+class HierarchicalCluster:
     def __init__(self,
                  X=None,
                  y=None,
@@ -64,6 +64,6 @@ if __name__ == '__main__':
     y = np.random.randn(97, )
     print(X.shape)
     print(y.shape)
-    myCluster = Clustering(X=X, y=y)
+    myCluster = HierarchicalCluster(X=X, y=y)
     myCluster.display_cluster_plot(max_cluster=2)
     myCluster.display_dendogram()

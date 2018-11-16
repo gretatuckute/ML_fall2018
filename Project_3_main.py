@@ -2,6 +2,7 @@ import ProstateDataHandler
 import numpy as np
 import seaborn as sns
 import ML_plotter
+from Clustering import HierarchicalCluster
 
 # Nicer formatting of plots
 sns.set_style("darkgrid")
@@ -28,7 +29,7 @@ print('There are {} observations in the data set'.format(N))
 print('X has shape {}'.format(np.shape(X)))
 print('y has shape {}'.format(np.shape(y)))
 
-
+'''
 ML_plotter.plot_attributes_2d(i=0,
                               j=1,
                               X=X,
@@ -37,5 +38,7 @@ ML_plotter.plot_attributes_2d(i=0,
                               classNames=classNames,
                               attributeNames=attributeNames,
                               saveFigure=False)
+'''
 
-
+prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y)
+prostate_hierarchical_clustering.
