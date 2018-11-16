@@ -15,6 +15,7 @@ class ProstateData:
     """
 
     def __init__(self):
+        print('DataHandler for Prostate data initialized')
         self.file = './Data/Prostate.xlsx'
         self.sheet = 'Sheet1'
         self.raw_data = self.load()
