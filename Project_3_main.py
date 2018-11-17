@@ -11,6 +11,7 @@ sns.set_style("darkgrid")
 # Controllers
 set_feature_plot = False
 set_hierarchical_clustering = True
+set_display_pca = False
 
 # Creating object to handle data load and feature transformation
 myData = ProstateDataHandler.ProstateData()
@@ -44,11 +45,13 @@ if set_hierarchical_clustering:
     X_pca = prostatePCA.get_principal_components(n_pca=2)
 
     # Displaying the first two principal components against each other
-    prostatePCA.display_pca()
+    if set_display_pca:
+        prostatePCA.display_pca()
 
     # Perform hierarchical clustering
-    prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='average')
+    prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='single')
     prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
-    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100)
+    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=7)
+    prostate_hierarchical_clustering.validate_cluster() # Empty right now because of unexpected error from toolbox
 
 

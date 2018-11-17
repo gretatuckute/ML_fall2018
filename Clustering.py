@@ -3,7 +3,7 @@ Contain everything related to clustering
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from toolbox_02450 import clusterplot
+from toolbox_02450 import clusterplot, clusterval
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 
 
@@ -44,8 +44,10 @@ class HierarchicalCluster:
         self.N = N
         self.M = M
         self.C = C
+        self.method = method
+        self.metric = metric
         self.max_cluster = max_cluster
-        self.Z = linkage(X, method=method, metric=metric)
+        self.Z = linkage(X, method=self.method, metric=self.metric)
 
     def _compute_clusters(self, max_cluster):
         cls = fcluster(Z=self.Z, criterion='maxclust', t=max_cluster)
@@ -62,6 +64,7 @@ class HierarchicalCluster:
 
         cls = self._compute_clusters(max_cluster)
         plt.figure()
+        plt.title('Cluster plot with {} clusters and {} linkage'.format(max_cluster, self.method), fontsize=16)
         clusterplot(X=self.X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y)
         plt.show()
         return 'Cluster plot displayed'
@@ -80,6 +83,7 @@ class HierarchicalCluster:
         :return:
         """
         plt.figure()
+        plt.title('Dendogram for {} linkage function'.format(self.method), fontsize=16)
         dendrogram(Z=self.Z,
                    truncate_mode=truncate_method,
                    p=max_display_levels,
@@ -87,6 +91,11 @@ class HierarchicalCluster:
                    color_threshold=color_threshold)
         plt.show()
         return print('Dendrogram displayed')
+
+    def validate_cluster(self):
+        #rand, jaccard, NMI = clusterval(self.y, self._compute_clusters(self.max_cluster))
+        #out = {'rand':rand, 'jaccard':jaccard, 'NMI':NMI}
+        return None #out
 
 
 if __name__ == '__main__':
@@ -97,3 +106,4 @@ if __name__ == '__main__':
     myCluster = HierarchicalCluster(X=X, y=y)
     myCluster.display_cluster_plot(max_cluster=2)
     myCluster.display_dendogram()
+    myCluster.validate_cluster()
