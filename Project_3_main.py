@@ -49,9 +49,9 @@ if set_hierarchical_clustering:
         prostatePCA.display_pca()
 
     # Perform hierarchical clustering
-    prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='single')
+    prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='average')
     prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
-    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=7)
+    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3)
     prostate_hierarchical_clustering.validate_cluster() # Empty right now because of unexpected error from toolbox
 
 
