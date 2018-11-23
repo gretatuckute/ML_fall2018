@@ -93,10 +93,31 @@ class HierarchicalCluster:
         plt.show()
         return print('Dendrogram displayed')
 
-    def validate_cluster(self):
-        #rand, jaccard, NMI = clusterval(self.y, self._compute_clusters(self.max_cluster))
-        #out = {'rand':rand, 'jaccard':jaccard, 'NMI':NMI}
-        return None #out
+    def validate_cluster(self, K):
+        # Allocate variables:
+        Rand = np.zeros((K,))
+        Jaccard = np.zeros((K,))
+        NMI = np.zeros((K,))
+
+
+
+        for k in range(K):
+            # Compute clusters
+            cls = self._compute_clusters(k)
+            # compute cluster validities:
+            Rand[k], Jaccard[k], NMI[k] = clusterval(self.y, cls)
+
+            # Plot results:
+
+        plt.figure()
+        plt.title('Cluster validity using {} linkage'.format(self.method), fontsize=16)
+        plt.plot(np.arange(K) + 1, Rand)
+        plt.plot(np.arange(K) + 1, Jaccard)
+        plt.plot(np.arange(K) + 1, NMI)
+        plt.ylim(-2, 1.1)
+        plt.legend(['Rand', 'Jaccard', 'NMI'], loc=4)
+        plt.show()
+        return print('Cluster validity performed')
 
 
 if __name__ == '__main__':
@@ -107,20 +128,6 @@ if __name__ == '__main__':
     myCluster = HierarchicalCluster(X=X, y=y)
     myCluster.display_cluster_plot(max_cluster=2)
     myCluster.display_dendogram()
-    myCluster.validate_cluster()
-    fig = plt.figure()
-    ax = plt.axes(projection='3d')
-    ax = plt.axes(projection='3d')
+    myCluster.validate_cluster(K=5)
 
-    # Data for a three-dimensional line
-    zline = np.linspace(0, 15, 1000)
-    xline = np.sin(zline)
-    yline = np.cos(zline)
-    ax.plot3D(xline, yline, zline, 'gray')
-
-    # Data for three-dimensional scattered points
-    zdata = 15 * np.random.random(100)
-    xdata = np.sin(zdata) + 0.1 * np.random.randn(100)
-    ydata = np.cos(zdata) + 0.1 * np.random.randn(100)
-    ax.scatter3D(xdata, ydata, zdata, c=zdata, cmap='Greens');
 
