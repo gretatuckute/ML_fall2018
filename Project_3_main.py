@@ -15,7 +15,9 @@ set_display_pca = False
 
 # Creating object to handle data load and feature transformation
 myData = ProstateDataHandler.ProstateData()
+
 raw_data = myData.get_rawData()
+
 
 # Preparing attribute names
 attributeNames = myData.get_attributeNames()
