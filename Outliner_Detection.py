@@ -29,6 +29,8 @@ C = len(classNames)
 
 # Generating X  and dimensionality
 N, M, X = myData.get_OutlierFeatureData()
+# Generating X & Y and dimensionality
+#N, M, X, y = myData.get_ClassificationFeatureData()
 
 X
 
@@ -54,13 +56,13 @@ width=widths[ind]
 density, log_density = gausKernelDensity(X, width)
 
 # Sort the densities
-i = (density.argsort(axis=0)).ravel()
-density = density[i]
+i_KDE = (density.argsort(axis=0)).ravel()
+density = density[i_KDE]
 
 # Plot density estimate of outlier score
 figure(1)
 bar(range(97),density[:97].reshape(-1,))
-title('Density estimate')
+title('Gaussian Kernel Density: Outlier score')
 figure(2)
 plot(logP)
 title('Optimal width')
@@ -70,15 +72,16 @@ print('Optimal estimated width is: {0}'.format(width))
 
 # Display the index of the lowest density data object
 print('Gaussian Kernel density')
-print('Lowest density: {0} for data object: {1}'.format(density[0],i[0]))
+print('Lowest density: {0} for data object: {1}'.format(density[0],i_KDE[0]))
 # Display the index of the 2. lowest density data object
-print('2. lowest density: {0} for data object: {1}'.format(density[1],i[1]))
+print('2. lowest density: {0} for data object: {1}'.format(density[1],i_KDE[1]))
 # Display the index of the 3. lowest density data object
-print('3. lowest density: {0} for data object: {1}'.format(density[2],i[2]))
+print('3. lowest density: {0} for data object: {1}'.format(density[2],i_KDE[2]))
 # Display the index of the 4. lowest density data object
-print('4. lowest density: {0} for data object: {1}'.format(density[3],i[3]))
-# Display the index of the 5.third lowest density data object
-print('5. lowest density: {0} for data object: {1}'.format(density[4],i[4]))
+print('4. lowest density: {0} for data object: {1}'.format(density[3],i_KDE[3]))
+# Display the index of the 5. lowest density data object
+print('5. lowest density: {0} for data object: {1}'.format(density[4],i_KDE[4]))
+print(density)
 
 ### KNN density
 
@@ -93,8 +96,8 @@ D, i = knn.kneighbors(X)
 density = 1./(D.sum(axis=1)/K)
 
 # Sort the scores
-i = density.argsort()
-density = density[i]
+i_KNN = density.argsort()
+density = density[i_KNN]
 
 # Plot k-neighbor estimate of outlier score (distances)
 figure(3)
@@ -103,16 +106,16 @@ title('KNN density: Outlier score')
 
 # Display the index of the lowest density data object
 print('K-neighbors density estimator')
-print('Lowest density: {0} for data object: {1}'.format(density[0],i[0]))
+print('Lowest density: {0} for data object: {1}'.format(density[0],i_KNN[0]))
 # Display the index of the 2. lowest density data object
-print('2. lowest density: {0} for data object: {1}'.format(density[1],i[1]))
+print('2. lowest density: {0} for data object: {1}'.format(density[1],i_KNN[1]))
 # Display the index of the 3. lowest density data object
-print('3. lowest density: {0} for data object: {1}'.format(density[2],i[2]))
+print('3. lowest density: {0} for data object: {1}'.format(density[2],i_KNN[2]))
 # Display the index of the 4. lowest density data object
-print('4. lowest density: {0} for data object: {1}'.format(density[3],i[3]))
+print('4. lowest density: {0} for data object: {1}'.format(density[3],i_KNN[3]))
 # Display the index of the 5.third lowest density data object
-print('5. lowest density: {0} for data object: {1}'.format(density[4],i[4]))
-
+print('5. lowest density: {0} for data object: {1}'.format(density[4],i_KNN[4]))
+print(density)
 ##### KNN average relative density (ARD)
 
 ### K-nearest neigbor average relative density
@@ -143,3 +146,22 @@ print('3. lowest density: {0} for data object: {1}'.format(avg_rel_density[2],i_
 print('4. lowest density: {0} for data object: {1}'.format(avg_rel_density[3],i_avg_rel[3]))
 # Display the index of the 5.third lowest density data object
 print('5. lowest density: {0} for data object: {1}'.format(avg_rel_density[4],i_avg_rel[4]))
+print(density)
+# 
+print('KDE')
+print(i_KDE)
+print('KNN')
+print(i_KNN)
+print('ARD')
+print(i_avg_rel)
+
+
+### Plot PCA ###
+# Creating a PCA object
+prostatePCA = report_PCA.prostatePCA(X=X)
+
+# Projecting the data down to the first two principal components (easier plotting)
+X_pca = prostatePCA.get_principal_components(n_pca=2)
+
+# Displaying the first two principal components against each other
+prostatePCA.display_pca_outlier_detection()

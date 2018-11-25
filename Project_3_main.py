@@ -11,7 +11,7 @@ sns.set_style("darkgrid")
 # Controllers
 set_feature_plot = False
 set_hierarchical_clustering = True
-set_display_pca = False
+set_display_pca = True
 
 # Creating object to handle data load and feature transformation
 myData = ProstateDataHandler.ProstateData()
@@ -26,6 +26,7 @@ C = len(classNames)
 
 # Generating X & Y and dimensionality
 N, M, X, y = myData.get_ClassificationFeatureData()
+
 
 # Plotting two features against each other
 if set_feature_plot:

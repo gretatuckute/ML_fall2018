@@ -37,7 +37,27 @@ class prostatePCA:
         plt.ylabel('PC2')
         plt.title('PC1 vs PC2')
         plt.show()
-
+        
+    def display_pca_outlier_detection(self):
+        """
+        Display the first two prinsipal components against each other with outliers
+        :return: plot
+        """
+        Z = self.get_principal_components()
+        plt.figure()
+        plt.scatter(Z[:,0],Z[:,1])
+        plt.xlabel('PC1')
+        plt.ylabel('PC2')
+        plt.title('PC1 vs PC2')
+        #KDE
+        outliers = np.array([2, 46, 88, 56, 48])          
+        #KNN
+        #outliers = np.array([93, 2, 88, 56, 46])
+        #ARD
+        #outliers = np.array([2, 46, 11, 68, 88])
+        for i in outliers:
+            plt.annotate(i, (Z[i,0],Z[i,1]))
+        plt.show()
 
 
 if __name__ == '__main__':
