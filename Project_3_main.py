@@ -65,5 +65,5 @@ if set_association_mining:
     Xbin, attributeNamesBin = myData.get_binarizedFeatureData()
     prostate_association_mining = Association.AssociationMining()
     transactions = prostate_association_mining.mat2transactions(Xbin, attributeNamesBin)
-    rules = prostate_association_mining.get_rules(t=transactions, print_rules=True)
+    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.3, min_confidence=0.6, print_rules=True)
 
