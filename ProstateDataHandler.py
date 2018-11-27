@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from scipy.stats import zscore
 from categoric2numeric import *
+from similarity import binarize2
 
 
 class ProstateData:
@@ -87,6 +88,16 @@ class ProstateData:
         #print('y has shape {}'.format(np.shape(y_classification)))
         
         return N, M, X_k
+
+    def get_binarizedFeatureData(self):
+        _, _, X, y = self.get_ClassificationFeatureData()
+        attributeNames = self.get_attributeNames()
+        Xbin, attributeNamesBin = binarize2(X, attributeNames)
+        print('X has now been transformed into:')
+        print(Xbin)
+        print(attributeNamesBin)
+        return Xbin, attributeNamesBin
+
     
 
 if __name__ == '__main__':
