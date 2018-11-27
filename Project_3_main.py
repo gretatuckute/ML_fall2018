@@ -29,7 +29,7 @@ classLabels, classNames, classDict = myData.get_classLabels()
 C = len(classNames)
 
 # Generating X & Y and dimensionality
-N, M, X, y = myData.get_ClassificationFeatureData()
+N, M, X, y, svi = myData.get_ClassificationFeatureData()
 
 
 # Plotting two features against each other
@@ -56,9 +56,9 @@ if set_hierarchical_clustering:
         prostatePCA.display_pca()
 
     # Perform hierarchical clustering
-    prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y, method='average')
-    prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2, centroids=True)
-    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3.2)
+    prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y, method='complete')
+    prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
+    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3.3)
     prostate_hierarchical_clustering.validate_cluster(K=10)
 
 
@@ -66,5 +66,5 @@ if set_association_mining:
     Xbin, attributeNamesBin = myData.get_binarizedFeatureData()
     prostate_association_mining = Association.AssociationMining()
     transactions = prostate_association_mining.mat2transactions(Xbin, attributeNamesBin)
-    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.3, min_confidence=0.6, print_rules=True)
+    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.4, min_confidence=0.8, print_rules=True)
 

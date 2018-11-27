@@ -57,14 +57,14 @@ class ProstateData:
         svi = np.reshape(svi, [97, 1])
         X_k = np.concatenate((X_z, X_Gleason), axis=1)
         X_classification = X_k#[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
-        y_classification = svi #X_k[:, 10]
+        y_classification = svi.squeeze() #X_k[:, 10]
         N, M = X_classification.shape
         print('There are {} features in the data set'.format(M))
         print('There are {} observations in the data set'.format(N))
         print('X has shape {}'.format(np.shape(X_classification)))
         print('y has shape {}'.format(np.shape(y_classification)))
         
-        return N, M, X_classification, y_classification
+        return N, M, X_classification, y_classification, svi
     
     def get_OutlierFeatureData(self):
         data = self.raw_data
@@ -87,9 +87,22 @@ class ProstateData:
         return N, M, X_k
 
     def get_binarizedFeatureData(self):
-        _, _, X, y = self.get_ClassificationFeatureData()
+        _, _, X, y, _ = self.get_ClassificationFeatureData()
         attributeNames = self.get_attributeNames()
+        gleason = X[:, 6:]
+        X = X[:,0:6]
+
+        gleasonNames = attributeNames[6:]
+        attributeNames = attributeNames[0:6]
+        [y, _] = categoric2numeric(y)
+
+        yNames = ['SVI 0', 'SVI 1']
+
         Xbin, attributeNamesBin = binarize2(X, attributeNames)
+        Xbin = np.concatenate((Xbin, gleason), axis=1)
+
+        Xbin = np.concatenate((Xbin, y), axis=1)
+        attributeNamesBin = attributeNamesBin + gleasonNames + yNames
         print('X has now been transformed into:')
         print(Xbin)
         print(attributeNamesBin)

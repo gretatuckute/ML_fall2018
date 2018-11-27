@@ -5,8 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from toolbox_02450 import clusterplot, clusterval
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
-from mpl_toolkits import mplot3d
-
+from scipy.linalg import svd
 
 class HierarchicalCluster:
     """
@@ -54,7 +53,7 @@ class HierarchicalCluster:
         cls = fcluster(Z=self.Z, criterion='maxclust', t=max_cluster)
         return cls
 
-    def display_cluster_plot(self, max_cluster=None, centroids=None):
+    def display_cluster_plot(self, max_cluster=None):
         """
         Display a cluster plot
         :param max_cluster: maximum number of clusters
@@ -63,10 +62,23 @@ class HierarchicalCluster:
         if max_cluster == None:
             max_cluster = self.max_cluster
 
+        X = self.X
+
+        Xshape = X.shape
+
+        Xshape = Xshape[1]
+
+        if Xshape > 2:
+            X = self._get_principal_components()
+            print('X has too many dimensions to plot. PCA performed')
+            print(X.shape)
+
+
+
         cls = self._compute_clusters(max_cluster)
         plt.figure()
         plt.title('Cluster plot with {} clusters and {} linkage'.format(max_cluster, self.method), fontsize=16)
-        clusterplot(X=self.X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y, centroids=centroids)
+        clusterplot(X=X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y)
         plt.show()
         return 'Cluster plot displayed'
 
@@ -99,8 +111,6 @@ class HierarchicalCluster:
         Jaccard = np.zeros((K,))
         NMI = np.zeros((K,))
 
-
-
         for k in range(K):
             # Compute clusters
             cls = self._compute_clusters(k)
@@ -118,6 +128,20 @@ class HierarchicalCluster:
         plt.legend(['Rand', 'Jaccard', 'NMI'], loc=4)
         plt.show()
         return print('Cluster validity performed')
+
+    def _get_principal_components(self, n_pca=2):
+        """
+        Performs the singular value decomposition
+        :param n_pca: Int, number of PC's returned
+        :return: specified number of principal components
+        """
+        U, S, V = svd(self.X, full_matrices=False)
+        Z = np.dot(self.X, V.T)
+        return Z[:,0:n_pca]
+
+
+
+
 
 
 if __name__ == '__main__':
