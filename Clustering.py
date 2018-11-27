@@ -54,7 +54,7 @@ class HierarchicalCluster:
         cls = fcluster(Z=self.Z, criterion='maxclust', t=max_cluster)
         return cls
 
-    def display_cluster_plot(self, max_cluster=None, centroids=None):
+    def display_cluster_plot(self, max_cluster=None):
         """
         Display a cluster plot
         :param max_cluster: maximum number of clusters
@@ -66,7 +66,7 @@ class HierarchicalCluster:
         cls = self._compute_clusters(max_cluster)
         plt.figure()
         plt.title('Cluster plot with {} clusters and {} linkage'.format(max_cluster, self.method), fontsize=16)
-        clusterplot(X=self.X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y, centroids=centroids)
+        clusterplot(X=self.X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y)
         plt.show()
         return 'Cluster plot displayed'
 
@@ -98,8 +98,6 @@ class HierarchicalCluster:
         Rand = np.zeros((K,))
         Jaccard = np.zeros((K,))
         NMI = np.zeros((K,))
-
-
 
         for k in range(K):
             # Compute clusters

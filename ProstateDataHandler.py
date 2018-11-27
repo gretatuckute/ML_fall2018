@@ -57,7 +57,7 @@ class ProstateData:
         svi = np.reshape(svi, [97, 1])
         X_k = np.concatenate((X_z, X_Gleason), axis=1)
         X_classification = X_k#[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
-        y_classification = svi #X_k[:, 10]
+        y_classification = svi.squeeze() #X_k[:, 10]
         N, M = X_classification.shape
         print('There are {} features in the data set'.format(M))
         print('There are {} observations in the data set'.format(N))
