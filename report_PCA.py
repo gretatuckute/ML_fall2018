@@ -50,11 +50,11 @@ class prostatePCA:
         plt.ylabel('PC2')
         plt.title('PC1 vs PC2')
         #KDE
-        outliers = np.array([2, 46, 88, 56, 48])          
+        #outliers = np.array([2, 46, 88, 56, 48])          
         #KNN
         #outliers = np.array([93, 2, 88, 56, 46])
         #ARD
-        #outliers = np.array([2, 46, 11, 68, 88])
+        outliers = np.array([2, 46, 11, 68, 88])
         for i in outliers:
             plt.annotate(i, (Z[i,0],Z[i,1]))
         plt.show()
