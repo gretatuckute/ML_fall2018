@@ -64,7 +64,7 @@ class ProstateData:
         print('X has shape {}'.format(np.shape(X_classification)))
         print('y has shape {}'.format(np.shape(y_classification)))
         
-        return N, M, X_classification, y_classification
+        return N, M, X_classification, y_classification, svi
     
     def get_OutlierFeatureData(self):
         data = self.raw_data
@@ -87,9 +87,22 @@ class ProstateData:
         return N, M, X_k
 
     def get_binarizedFeatureData(self):
-        _, _, X, y = self.get_ClassificationFeatureData()
+        _, _, X, y, _ = self.get_ClassificationFeatureData()
         attributeNames = self.get_attributeNames()
+        gleason = X[:, 6:]
+        X = X[:,0:6]
+
+        gleasonNames = attributeNames[6:]
+        attributeNames = attributeNames[0:6]
+        [y, _] = categoric2numeric(y)
+
+        yNames = ['SVI 0', 'SVI 1']
+
         Xbin, attributeNamesBin = binarize2(X, attributeNames)
+        Xbin = np.concatenate((Xbin, gleason), axis=1)
+
+        Xbin = np.concatenate((Xbin, y), axis=1)
+        attributeNamesBin = attributeNamesBin + gleasonNames + yNames
         print('X has now been transformed into:')
         print(Xbin)
         print(attributeNamesBin)
