@@ -57,7 +57,7 @@ if set_hierarchical_clustering:
 
     # Perform hierarchical clustering
     prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y, method='average')
-    prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
+    prostate_hierarchical_clustering.display_cluster_plot(max_cluster=4)
     prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3.3)
     prostate_hierarchical_clustering.validate_cluster(K=10)
 

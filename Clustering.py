@@ -70,13 +70,15 @@ class HierarchicalCluster:
 
         if Xshape > 2:
             X = self._get_principal_components()
+            print('X has too many dimensions to plot. PCA performed')
+            print(X.shape)
 
 
 
         cls = self._compute_clusters(max_cluster)
         plt.figure()
         plt.title('Cluster plot with {} clusters and {} linkage'.format(max_cluster, self.method), fontsize=16)
-        clusterplot(X=self.X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y)
+        clusterplot(X=X, clusterid=cls.reshape(cls.shape[0], 1), y=self.y)
         plt.show()
         return 'Cluster plot displayed'
 
