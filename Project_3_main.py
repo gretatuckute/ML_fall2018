@@ -4,14 +4,17 @@ import seaborn as sns
 import report_PCA
 import ML_plotter
 from Clustering import HierarchicalCluster
+import Association
 
 # Nicer formatting of plots
 sns.set_style("darkgrid")
 
 # Controllers
 set_feature_plot = False
-set_hierarchical_clustering = True
-set_display_pca = True
+set_hierarchical_clustering = False
+set_display_pca = False
+set_association_mining = True
+
 
 # Creating object to handle data load and feature transformation
 myData = ProstateDataHandler.ProstateData()
@@ -52,9 +55,15 @@ if set_hierarchical_clustering:
         prostatePCA.display_pca()
 
     # Perform hierarchical clustering
-    prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='average')
-    prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
+    prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y, method='average')
+    prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2, centroids=True)
     prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3.2)
-    prostate_hierarchical_clustering.validate_cluster(K=10) # Empty right now because of unexpected error from toolbox
+    prostate_hierarchical_clustering.validate_cluster(K=10)
 
+
+if set_association_mining:
+    Xbin, attributeNamesBin = myData.get_binarizedFeatureData()
+    prostate_association_mining = Association.AssociationMining()
+    transactions = prostate_association_mining.mat2transactions(Xbin, attributeNamesBin)
+    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.3, min_confidence=0.6, print_rules=True)
 
