@@ -1,5 +1,4 @@
 import ProstateDataHandler
-import numpy as np
 import seaborn as sns
 import report_PCA
 import ML_plotter
