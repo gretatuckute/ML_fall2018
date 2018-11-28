@@ -86,10 +86,12 @@ class Outlier_Detection:
         density = density[i_KDE]
 
         # Plot density estimate of outlier score
-        figure(1)
+        figure()
         bar(range(97), density[:97].reshape(-1, ))
         title('Gaussian Kernel Density: Outlier score')
-        figure(2)
+        show()
+
+        figure()
         plot(logP)
         title('Optimal width')
         show()
@@ -125,9 +127,10 @@ class Outlier_Detection:
         density = density[i_KNN]
 
         # Plot k-neighbor estimate of outlier score (distances)
-        figure(3)
+        figure()
         bar(range(97), density[:97])
         title('KNN density: Outlier score')
+        show()
 
         # Display the index of the lowest density data object
         print('K-neighbors density estimator')
@@ -158,9 +161,10 @@ class Outlier_Detection:
         i_KNN = self.knn_density()
 
         # Plot k-neighbor estimate of outlier score (distances)
-        figure(5)
+        figure()
         bar(range(97), avg_rel_density[:97])
         title('KNN average relative density: Outlier score')
+        show()
 
         # Display the index of the lowest density data object
         print('ARD')
