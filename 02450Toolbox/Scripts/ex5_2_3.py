@@ -6,7 +6,7 @@ import sklearn.linear_model as lm
 
 # Parameters
 Kd = 5  # no of terms for data generator
-Km = 1  # no of terms for regression model
+Km = 3  # no of terms for regression model
 N = 50  # no of data objects to train a model
 Xe =  np.linspace(-2,2,1000).reshape(-1,1) # X values to visualize true data and model
 eps_mean, eps_std = 0, 0.5          # noise parameters

@@ -11,4 +11,5 @@ attributeNames = tm.get_words(sort=True)
 # Display the result
 print(attributeNames)
 print(X)
+
 print('Ran Exercise 3.1.2')

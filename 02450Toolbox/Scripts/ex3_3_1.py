@@ -6,10 +6,10 @@ from scipy.io import loadmat
 from similarity import similarity
 
 # Image to use as query
-i = 3
+i = 1
 
 # Similarity: 'SMC', 'Jaccard', 'ExtendedJaccard', 'Cosine', 'Correlation' 
-similarity_measure = 'cos'
+similarity_measure = 'smc'
 
 # Load the CBCL face database
 # Load Matlab data file to python dict structure

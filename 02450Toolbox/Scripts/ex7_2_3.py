@@ -15,9 +15,9 @@ X = np.zeros((len(names),4))
 y = np.zeros((len(names),1))
 n=0
 for i in range(0,len(names)):
-    name = names[i].strip().lower() # Ændre fra stort til lille bokstav
+    name = names[i].strip().lower()
     if len(name)>3:
-        X[n,:] = [ord(name[0])-ord('a')+1, ord(name[1])-ord('a')+1, ord(name[-2])-ord('a')+1, ord(name[-1])-ord('a')+1] # ord ændrer fra bokstab til tal (gør at a bliver 0 - counter starter på 26)
+        X[n,:] = [ord(name[0])-ord('a')+1, ord(name[1])-ord('a')+1, ord(name[-2])-ord('a')+1, ord(name[-1])-ord('a')+1]
         y[n,0] = gender[i]
         n+=1
 X = X[0:n,:]; y = y[0:n,:];

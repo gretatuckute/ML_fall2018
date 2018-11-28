@@ -3,12 +3,12 @@
 from matplotlib.pyplot import (figure, hold, plot, title, xlabel, ylabel, 
                                colorbar, imshow, xticks, yticks, show)
 from scipy.io import loadmat
-from sklearn.neighbors import KNeighborsClassifier
+from sklearn.neighbors import KNeighborsClassifier, DistanceMetric
 from sklearn.metrics import confusion_matrix
-
+from numpy import cov
 
 # Load Matlab data file and extract variables of interest
-mat_data = loadmat('../Data/synth4.mat')
+mat_data = loadmat('../Data/synth1.mat') # <-- change the number to change dataset
 X = mat_data['X']
 X_train = mat_data['X_train']
 X_test = mat_data['X_test']
@@ -34,12 +34,24 @@ K=5
 
 # Distance metric (corresponds to 2nd norm, euclidean distance).
 # You can set dist=1 to obtain manhattan distance (cityblock distance).
-dist=1
+dist=2
+metric = 'minkowski'
+metric_params = {} # no parameters needed for minkowski
+
+# You can set the metric argument to 'cosine' to determine the cosine distance
+#metric = 'cosine' 
+#metric_params = {} # no parameters needed for cosine
+
+# To use a mahalonobis distance, we need to input the covariance matrix, too:
+#metric='mahalanobis'
+#metric_params={'V': cov(X_train, rowvar=False)}
 
 # Fit classifier and classify the test points
-knclassifier = KNeighborsClassifier(n_neighbors=K, p=dist);
-knclassifier.fit(X_train, y_train);
-y_est = knclassifier.predict(X_test);
+knclassifier = KNeighborsClassifier(n_neighbors=K, p=dist, 
+                                    metric=metric,
+                                    metric_params=metric_params)
+knclassifier.fit(X_train, y_train)
+y_est = knclassifier.predict(X_test)
 
 
 # Plot the classfication results

@@ -6,13 +6,13 @@ import xlrd
 doc = xlrd.open_workbook('../Data/nanonose.xls').sheet_by_index(0)
 
 # Extract attribute names (1st row, column 4 to 12)
-attributeNames = doc.row_values(0, 3, 11) # række 1, colomn 4-12
+attributeNames = doc.row_values(0, 3, 11)
 
 # Extract class names to python list,
 # then encode with integers (dict)
-classLabels = doc.col_values(0, 2, 92) # kolonne 1, række 3-93
-classNames = sorted(set(classLabels)) # sorterer alle der findes
-classDict = dict(zip(classNames, range(5))) # sætter classname sammen med 
+classLabels = doc.col_values(0, 2, 92)
+classNames = sorted(set(classLabels))
+classDict = dict(zip(classNames, range(5)))
 
 # Extract vector y, convert to NumPy array
 y = np.asarray([classDict[value] for value in classLabels])
@@ -25,6 +25,6 @@ for i, col_id in enumerate(range(3, 11)):
 # Compute values of N, M and C.
 N = len(y)
 M = len(attributeNames)
-C = len(classNames) 
+C = len(classNames)
 
 print('Ran Exercise 2.1.1')

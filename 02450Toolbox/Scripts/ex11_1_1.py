@@ -15,13 +15,14 @@ classNames = [name[0][0] for name in mat_data['classNames']]
 N, M = X.shape
 C = len(classNames)
 # Number of clusters
-K = 10
+K = 4
 cov_type = 'full'       
 # type of covariance, you can try out 'diag' as well
 reps = 1                
 # number of fits with different initalizations, best result will be kept
 # Fit Gaussian mixture model
-gmm = GaussianMixture(n_components=K, covariance_type=cov_type, n_init=reps).fit(X)
+gmm = GaussianMixture(n_components=K, covariance_type=cov_type, n_init=reps, 
+                      tol=1e-6).fit(X)
 cls = gmm.predict(X)    
 # extract cluster labels
 cds = gmm.means_        

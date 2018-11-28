@@ -12,7 +12,7 @@ print(V[:,1].T)
 ## Projection of water class onto the 2nd principal component.
 
 # When Y and V have type numpy.array, then @ is matrix multiplication
-print( Y[y==4,:] @ V[:,1] ) # water times v. Get B (the projection - the x-axis)
+print( Y[y==4,:] @ V[:,1] )
 
 # or convert V to a numpy.mat and use * (matrix multiplication for numpy.mat)
 #print((Y[y==4,:] * np.mat(V[:,1]).T).T)

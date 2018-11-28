@@ -6,7 +6,7 @@ import graphviz
 from ex5_1_5 import *
 
 # Fit regression tree classifier, Gini split criterion, pruning enabled
-dtc = tree.DecisionTreeClassifier(criterion='gini', min_samples_split=2)
+dtc = tree.DecisionTreeClassifier(criterion='gini', min_samples_split=100)
 dtc = dtc.fit(X,y)
 
 # Export tree graph for visualization purposes:

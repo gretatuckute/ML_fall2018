@@ -7,6 +7,7 @@ import numpy as np
 from scipy.io import loadmat
 import neurolab as nl
 from sklearn import model_selection
+from toolbox_02450 import draw_neural_net
 
 # read XOR DATA from matlab datafile
 mat_data = loadmat('../Data/xor.mat')
@@ -49,7 +50,8 @@ for train_index, test_index in CV.split(X,y):
     best_train_error = 1e100
     for i in range(n_train):
         # Create randomly initialized network with 2 layers
-        ann = nl.net.newff([[0, 1], [0, 1]], [n_hidden_units, 1], [nl.trans.TanSig(),nl.trans.PureLin()])
+        transfer_functions = [nl.trans.TanSig(), nl.trans.PureLin()]
+        ann = nl.net.newff([[0, 1], [0, 1]], [n_hidden_units, 1], transfer_functions)
         # train network
         train_error = ann.train(X_train, y_train, goal=learning_goal, epochs=max_epochs, show=round(max_epochs/8))
         if train_error[-1]<best_train_error:
@@ -60,6 +62,12 @@ for train_index, test_index in CV.split(X,y):
     y_est = bestnet[k].sim(X_test)
     y_est = (y_est>.5).astype(int)
     errors[k] = (y_est!=y_test).sum().astype(float)/y_test.shape[0]
+    
+    weights = [(e.np['w']).transpose() for e in bestnet[k].layers]
+    biases = [e.np['b'] for e in bestnet[k].layers]
+    tf = [type(e).__name__ for e in transfer_functions]
+    draw_neural_net(weights, biases, tf)
+    
     k+=1
     
 
@@ -87,19 +95,22 @@ for k in range(4):
             values[i,j] = bestnet[k].sim( np.mat([a[i],b[j]]) )[0,0]
     contour(A, B, values, levels=[.5], colors=['k'], linestyles='dashed')
     contourf(A, B, values, levels=np.linspace(values.min(),values.max(),levels), cmap=cm.RdBu)
-    if k==0: colorbar(); legend(['Class A (y=0)', 'Class B (y=1)'])
+    colorbar(); 
+    legend(['Class A (y=0)', 'Class B (y=1)'])
 
 
 # Display exemplary networks learning curve (best network of each fold)
 figure(2)
 bn_id = np.argmax(error_hist[-1,:])
+legend_strs = []
 error_hist[error_hist==0] = learning_goal
 for bn_id in range(K):
-    plot(error_hist[:,bn_id]); xlabel('epoch'); ylabel('train error (mse)'); title('Learning curve (best for each CV fold)')
-
+    plot(error_hist[:,bn_id]) 
+    xlabel('epoch'); ylabel('train error (mse)'); title('Learning curve (best for each CV fold)')
+    legend_strs += ['CV fold {}'.format(bn_id+1)]
 plot(range(max_epochs), [learning_goal]*max_epochs, '-.')
-
-
+legend_strs += ['Learning goal']
+legend(legend_strs)
 show()
 
 print('Ran Exercise 8.2.2')

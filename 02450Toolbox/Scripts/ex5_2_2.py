@@ -7,7 +7,7 @@ import numpy as np
 # Use dataset as in the previous exercise
 N = 100
 X = np.array(range(N)).reshape(-1,1)
-eps_mean, eps_std = 0, 0.01
+eps_mean, eps_std = 0, 0.1
 eps = np.array(eps_std*np.random.randn(N) + eps_mean).reshape(-1,1)
 w0 = -0.5
 w1 = 0.01
