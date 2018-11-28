@@ -79,7 +79,7 @@ class ProstateData:
         [X_Gleason, attribute_names_Gleason] = categoric2numeric(gleason)
         svi = np.reshape(svi, [97, 1])
         X_k = np.concatenate((X_z, X_Gleason), axis=1)
-        N, M = X_classification.shape
+        N, M = X_k.shape
         print('There are {} features in the data set'.format(M))
         print('There are {} observations in the data set'.format(N))
         print('X has shape {}'.format(np.shape(X_k)))
