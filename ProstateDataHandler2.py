@@ -32,7 +32,7 @@ class ProstateData:
         return data
 
     def get_attributeNames(self):
-        attributeNames = ['lCaVol', 'lWeight', 'Age', 'lBPH', 'lCP','Gleason 6.0', 'Gleason 7.0', 'Gleason 8.0', 'Gleason 9.0','SVI']
+        attributeNames = ['lCaVol', 'lWeight', 'Age', 'lBPH', 'lCP', 'lPSA', 'Gleason 6.0', 'Gleason 7.0', 'Gleason 8.0', 'Gleason 9.0']
         print('Attribute Names in data set are: {}'.format(attributeNames))
         return attributeNames
 
@@ -55,9 +55,9 @@ class ProstateData:
         X_z = zscore(X)
         [X_Gleason, attribute_names_Gleason] = categoric2numeric(gleason)
         svi = np.reshape(svi, [97, 1])
-        X_k = np.concatenate((X_z, X_Gleason, svi), axis=1)
-        X_classification = X_k[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
-        y_classification = X_k[:, 10]
+        X_k = np.concatenate((X_z, X_Gleason), axis=1)
+        X_classification = X_k#[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
+        y_classification = svi #X_k[:, 10]
         N, M = X_classification.shape
         print('There are {} features in the data set'.format(M))
         print('There are {} observations in the data set'.format(N))
@@ -74,18 +74,15 @@ class ProstateData:
         svi = X_orig[:, 4]
         X = np.delete(X, 6, 1)  # Deletes Gleason
         X = np.delete(X, 6, 1)  # Deletes PGG
-        X = np.delete(X, 4, 1)  # Deletes SVI
+        #X = np.delete(X, 4, 1)  # Deletes SVI
         X_z = zscore(X)
         [X_Gleason, attribute_names_Gleason] = categoric2numeric(gleason)
         svi = np.reshape(svi, [97, 1])
-        X_k = np.concatenate((X_z, X_Gleason, svi), axis=1)
-        #X_classification = X_k[:, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]]
-        #y_classification = X_k[:, 10]
-        N, M = X_k.shape
+        X_k = np.concatenate((X_z, X_Gleason), axis=1)
+        N, M = X_classification.shape
         print('There are {} features in the data set'.format(M))
         print('There are {} observations in the data set'.format(N))
         print('X has shape {}'.format(np.shape(X_k)))
-        #print('y has shape {}'.format(np.shape(y_classification)))
         
         return N, M, X_k
 
