@@ -3,9 +3,11 @@ Contain everything related to clustering
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from toolbox_02450 import clusterplot, clusterval
+from toolbox_02450 import clusterplot, clusterval, gausKernelDensity
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 from scipy.linalg import svd
+from sklearn.mixture import GaussianMixture
+
 
 class HierarchicalCluster:
     """
@@ -27,7 +29,7 @@ class HierarchicalCluster:
 
         :param X: Feature data
         :param y: True labels
-        :param AttributeNames: list of Attrigute names
+        :param AttributeNames: list of Attribute names
         :param classNames: list of Class names
         :param N: Number of observations
         :param M: Number of features
@@ -137,8 +139,91 @@ class HierarchicalCluster:
         """
         U, S, V = svd(self.X, full_matrices=False)
         Z = np.dot(self.X, V.T)
-        return Z[:,0:n_pca]
+        return Z[:, 0:n_pca]
 
+
+class GMM:
+    def __init__(self,
+                 X=None,
+                 y=None,
+                 AttributeNames=None,
+                 classNames=None,
+                 N=None,
+                 M=None,
+                 C=None,
+                 n_components = 4,
+                 covariance_type = 'full',
+                 n_init = 10):
+        """
+        init method executed when creating object
+
+        :param X: Feature data
+        :param y: True labels
+        :param AttributeNames: list of Attribute names
+        :param classNames: list of Class names
+        :param N: Number of observations
+        :param M: Number of features
+        :param C: Number of classes
+        :param max_cluster: maximum number of clusters
+        :param method: Linkage function, either 'single' 'complete', or 'average', default 'single'
+        :param metric: Dissimilarity measure, default 'euclidian'
+        """
+        print('Clustering object initialized')
+        self.X = X
+        self.y = y
+        self.AttributeNames = AttributeNames
+        self.classNames = classNames
+        self.N = N
+        self.M = M
+        self.C = C
+        self.K = n_components
+        self.cov_type = covariance_type
+        self.reps = n_init
+
+    def _fit_GMM(self, ):
+        gmm = GaussianMixture(n_components=self.K, covariance_type=self.cov_type, n_init=self.reps).fit(self.X)
+        cls = gmm.predict(self.X)
+        cds = gmm.means_
+        covs = gmm.covariances_
+
+        if self.cov_type.lower() == 'diag':
+            new_covs = np.zeros([K, self.M, self.M])
+
+            count = 0
+            for elem in covs:
+                temp_m = np.zeros([self.M, self.M])
+                new_covs[count] = np.diag(elem)
+                count += 1
+
+        return cls, cds, covs
+
+    def create_GMM_clusterplot(self, idx=[0,1]):
+        cls, cds, covs = self._fit_GMM()
+
+        X = self.X
+
+        Xshape = X.shape
+
+        Xshape = Xshape[1]
+
+        if Xshape > 2:
+            X = self._get_principal_components()
+            print('X has too many dimensions to plot. PCA performed')
+            print(X.shape)
+
+        plt.figure()
+        clusterplot(X, clusterid=cls, centroids=cds[:,idx], y=self.y, covars=covs[:,idx,:][:,:,idx])
+        plt.show()
+
+    def _get_principal_components(self, n_pca=2):
+        """
+        Performs the singular value decomposition
+        :param n_pca: Int, number of PC's returned
+        :return: specified number of principal components
+        """
+        U, S, V = svd(self.X, full_matrices=False)
+        Z = np.dot(self.X, V.T)
+        return Z[:, 0:n_pca]
 
 
 

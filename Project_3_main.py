@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sns
 import report_PCA
 import ML_plotter
-from Clustering import HierarchicalCluster
+from Clustering import HierarchicalCluster, GMM
 import Association
 
 # Nicer formatting of plots
@@ -11,7 +11,8 @@ sns.set_style("darkgrid")
 
 # Controllers
 set_feature_plot = False
-set_hierarchical_clustering = True
+set_hierarchical_clustering = False
+set_GMM_clustering = True
 set_display_pca = False
 set_association_mining = False
 
@@ -60,6 +61,11 @@ if set_hierarchical_clustering:
     prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
     prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3.3)
     prostate_hierarchical_clustering.validate_cluster(K=10)
+
+
+if set_GMM_clustering:
+    prostateGMM = GMM(X=X, y=y, n_components=2)
+    prostateGMM.create_GMM_clusterplot()
 
 
 if set_association_mining:
