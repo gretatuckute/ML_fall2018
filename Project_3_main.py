@@ -66,6 +66,7 @@ if set_hierarchical_clustering:
 if set_GMM_clustering:
     prostateGMM = GMM(X=X, y=y, n_components=2)
     prostateGMM.create_GMM_clusterplot()
+    prostateGMM.cross_validation()
 
 
 if set_association_mining:

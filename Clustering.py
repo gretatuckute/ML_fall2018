@@ -7,7 +7,7 @@ from toolbox_02450 import clusterplot, clusterval, gausKernelDensity
 from scipy.cluster.hierarchy import linkage, fcluster, dendrogram
 from scipy.linalg import svd
 from sklearn.mixture import GaussianMixture
-
+from sklearn.model_selection import KFold
 
 class HierarchicalCluster:
     """
@@ -224,6 +224,46 @@ class GMM:
         U, S, V = svd(self.X, full_matrices=False)
         Z = np.dot(self.X, V.T)
         return Z[:, 0:n_pca]
+
+    def cross_validation(self, k_range=range(1,11), n_splits=5):
+        T = len(k_range)
+
+        # Allocate variables
+        BIC = np.zeros((T,))
+        AIC = np.zeros((T,))
+        CVE = np.zeros((T,))
+
+        # K-fold cross validation
+        CV = KFold(n_splits=n_splits, shuffle=True)
+
+        for t,K in enumerate(k_range):
+            print('Fitting model for K={0}'.format(K))
+
+            gmm = GaussianMixture(n_components=K, covariance_type=self.cov_type, n_init=self.reps).fit(self.X)
+
+            BIC[t,] = gmm.bic(self.X)
+            AIC[t,] = gmm.aic(self.X)
+
+            for train_index, test_index in CV.split(self.X):
+
+                X_train = self.X[train_index]
+                X_test = self.X[test_index]
+
+                gmm = GaussianMixture(n_components=K, covariance_type=self.cov_type, n_init=self.reps).fit(X_train)
+
+                CVE[t] += -gmm.score_samples(X_test).sum()
+
+        plt.figure()
+        plt.plot(k_range, BIC, '-*b')
+        plt.plot(k_range, AIC, '-xr')
+        plt.plot(k_range, 2 * CVE, '-ok')
+        plt.legend(['BIC', 'AIC', 'Crossvalidation'])
+        plt.xlabel('K')
+        plt.show()
+
+
+
+
 
 
 
