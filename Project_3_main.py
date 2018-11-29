@@ -73,9 +73,15 @@ if set_GMM_clustering:
     # Generating X & Y and dimensionality
     N, M, X, y, svi = myData.get_ClassificationFeatureData()
 
-    prostateGMM = GMM(X=X, y=y, n_components=2)
+    # Creating a PCA object
+    prostatePCA = report_PCA.prostatePCA(X=X)
+
+    # Projecting the data down to the first two principal components (easier plotting)
+    X_pca = prostatePCA.get_principal_components(n_pca=2)
+
+    prostateGMM = GMM(X=X_pca, y=y, n_components=2)
     prostateGMM.create_GMM_clusterplot()
-    #prostateGMM.cross_validation()
+    prostateGMM.cross_validation()
 
 
 if set_association_mining:

@@ -153,7 +153,8 @@ class GMM:
                  C=None,
                  n_components = 4,
                  covariance_type = 'full',
-                 n_init = 10):
+                 n_init = 10,
+                 tolerance = 1e-6):
         """
         init method executed when creating object
 
@@ -179,9 +180,10 @@ class GMM:
         self.K = n_components
         self.cov_type = covariance_type
         self.reps = n_init
+        self.tol = tolerance
 
     def _fit_GMM(self, ):
-        gmm = GaussianMixture(n_components=self.K, covariance_type=self.cov_type, n_init=self.reps).fit(self.X)
+        gmm = GaussianMixture(n_components=self.K, covariance_type=self.cov_type, n_init=self.reps, tol=self.tol).fit(self.X)
         cls = gmm.predict(self.X)
         cds = gmm.means_
         covs = gmm.covariances_

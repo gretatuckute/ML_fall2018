@@ -56,7 +56,7 @@ for t,K in enumerate(KRange):
 
 # Plot results
 
-figure(1); 
+figure();
 plot(KRange, BIC,'-*b')
 plot(KRange, AIC,'-xr')
 plot(KRange, 2*CVE,'-ok')
