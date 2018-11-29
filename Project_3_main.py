@@ -4,18 +4,18 @@ import report_PCA
 import ML_plotter
 from Clustering import HierarchicalCluster, GMM
 from Outliner_Detection import Outlier_Detection
-import Association
+from ML_fall2018 import Association
 
 # Nicer formatting of plots
 sns.set_style("darkgrid")
 
 # Controllers
 set_feature_plot = False
-set_hierarchical_clustering = True
-set_GMM_clustering = True
+set_hierarchical_clustering = False
+set_GMM_clustering = False
 set_display_pca = False
 set_association_mining = True
-set_outlier_detection = True
+set_outlier_detection = False
 
 
 
@@ -80,7 +80,7 @@ if set_association_mining:
     Xbin, attributeNamesBin = myData.get_binarizedFeatureData()
     prostate_association_mining = Association.AssociationMining()
     transactions = prostate_association_mining.mat2transactions(Xbin, attributeNamesBin)
-    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.4, min_confidence=0.8, print_rules=True)
+    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.35, min_confidence=0.75, print_rules=True)
 
 
 if set_outlier_detection:
