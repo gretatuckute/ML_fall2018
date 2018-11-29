@@ -26,9 +26,9 @@ def plot_attributes_2d(X, y, C, classNames, attributeNames, i=0, j=1, saveFigure
         class_mask = y==c
         plt.plot(X[class_mask,i], X[class_mask,j], 'o')
 
-    plt.legend(classNames)
+    #plt.legend(classNames)
     svi_legend = ['SVI 0', 'SVI 1']
-    plt.legend(svi_legend, loc='upper center', bbox_to_anchor=(0.5, -0.3), ncol=1)
+    plt.legend(svi_legend)#, loc='upper center', ncol=1)#, bbox_to_anchor=(0.5, -0.3))
     plt.rc('legend',fontsize=24)
     axis_font = {'size':'24'}
     plt.xlabel(attributeNames[i], **axis_font)

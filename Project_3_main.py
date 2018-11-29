@@ -11,10 +11,10 @@ sns.set_style("darkgrid")
 
 # Controllers
 set_feature_plot = False
-set_hierarchical_clustering = False
+set_hierarchical_clustering = True
 set_GMM_clustering = False
 set_display_pca = False
-set_association_mining = True
+set_association_mining = False
 set_outlier_detection = False
 
 
@@ -35,8 +35,10 @@ C = len(classNames)
 
 # Plotting two features against each other
 if set_feature_plot:
-    ML_plotter.plot_attributes_2d(i=0,
-                                j=1,
+    # Generating X & Y and dimensionality
+    N, M, X, y, svi = myData.get_ClassificationFeatureData()
+    ML_plotter.plot_attributes_2d(i=2,
+                                j=5,
                                 X=X,
                                 y=y,
                                 C=C,
@@ -61,9 +63,9 @@ if set_hierarchical_clustering:
         prostatePCA.display_pca()
 
     # Perform hierarchical clustering
-    prostate_hierarchical_clustering = HierarchicalCluster(X=X, y=y, method='complete')
+    prostate_hierarchical_clustering = HierarchicalCluster(X=X_pca, y=y, method='single')
     prostate_hierarchical_clustering.display_cluster_plot(max_cluster=2)
-    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=3.3)
+    prostate_hierarchical_clustering.display_dendogram(max_display_levels=100, orientation='top', color_threshold=7.0)
     prostate_hierarchical_clustering.validate_cluster(K=10)
 
 
@@ -80,7 +82,7 @@ if set_association_mining:
     Xbin, attributeNamesBin = myData.get_binarizedFeatureData()
     prostate_association_mining = AssociationMining()
     transactions = prostate_association_mining.mat2transactions(Xbin, attributeNamesBin)
-    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.35, min_confidence=0.75, print_rules=True)
+    rules = prostate_association_mining.get_rules(t=transactions, min_support=0.17, min_confidence=0.8, print_rules=True)
 
 
 if set_outlier_detection:
