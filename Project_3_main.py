@@ -11,8 +11,8 @@ sns.set_style("darkgrid")
 
 # Controllers
 set_feature_plot = False
-set_hierarchical_clustering = True
-set_GMM_clustering = False
+set_hierarchical_clustering = False
+set_GMM_clustering = True
 set_display_pca = False
 set_association_mining = False
 set_outlier_detection = False
@@ -75,7 +75,7 @@ if set_GMM_clustering:
 
     prostateGMM = GMM(X=X, y=y, n_components=2)
     prostateGMM.create_GMM_clusterplot()
-    prostateGMM.cross_validation()
+    #prostateGMM.cross_validation()
 
 
 if set_association_mining:

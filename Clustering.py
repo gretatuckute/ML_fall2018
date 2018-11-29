@@ -195,6 +195,8 @@ class GMM:
                 new_covs[count] = np.diag(elem)
                 count += 1
 
+                covs = new_covs
+
         return cls, cds, covs
 
     def create_GMM_clusterplot(self, idx=[0,1]):
