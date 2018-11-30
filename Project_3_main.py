@@ -11,8 +11,8 @@ sns.set_style("darkgrid")
 
 # Controllers
 set_feature_plot = False
-set_hierarchical_clustering = False
-set_GMM_clustering = True
+set_hierarchical_clustering = True
+set_GMM_clustering = False
 set_display_pca = False
 set_association_mining = False
 set_outlier_detection = False
