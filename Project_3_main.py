@@ -20,12 +20,12 @@ from sklearn.neighbors import NearestNeighbors
 sns.set_style("darkgrid")
 
 # Controllers
-set_feature_plot = True
-set_hierarchical_clustering = True
+set_feature_plot = False
+set_hierarchical_clustering = False
 set_GMM_clustering = True
-set_display_pca = True
-set_association_mining = True
-set_outlier_detection = True
+set_display_pca = False
+set_association_mining = False
+set_outlier_detection = False
 
 
 
@@ -276,7 +276,7 @@ class GMM:
                  N=None,
                  M=None,
                  C=None,
-                 n_components = 4,
+                 n_components = 7,
                  covariance_type = 'full',
                  n_init = 10,
                  tolerance = 1e-6):
@@ -295,7 +295,7 @@ class GMM:
         :param metric: Dissimilarity measure, default 'euclidian'
         """
         print('Clustering object initialized')
-        self.X = X
+        self.X = X_pca
         self.y = y
         self.AttributeNames = AttributeNames
         self.classNames = classNames
@@ -308,7 +308,7 @@ class GMM:
         self.tol = tolerance
 
     def _fit_GMM(self, ):
-        gmm = GaussianMixture(n_components=self.K, covariance_type=self.cov_type, n_init=self.reps, tol=self.tol).fit(self.X)
+        gmm = GaussianMixture(n_components=self.K, covariance_type=self.cov_type, n_init=self.reps, tol=self.tol,reg_covar=0.01).fit(self.X)
         cls = gmm.predict(self.X)
         cds = gmm.means_
         covs = gmm.covariances_
@@ -361,6 +361,8 @@ class GMM:
         BIC = np.zeros((T,))
         AIC = np.zeros((T,))
         CVE = np.zeros((T,))
+        
+        COV = np.zeros((T,))
 
         # K-fold cross validation
         CV = KFold(n_splits=n_splits, shuffle=True)
@@ -373,20 +375,22 @@ class GMM:
             BIC[t,] = gmm.bic(self.X)
             AIC[t,] = gmm.aic(self.X)
 
+
             for train_index, test_index in CV.split(self.X):
 
                 X_train = self.X[train_index]
                 X_test = self.X[test_index]
 
-                gmm = GaussianMixture(n_components=K, covariance_type=self.cov_type, n_init=self.reps).fit(X_train)
+                gmm = GaussianMixture(n_components=K, covariance_type=self.cov_type, n_init=self.reps,reg_covar=0.01).fit(X_train)
 
                 CVE[t] += -gmm.score_samples(X_test).sum()
+                
 
         plt.figure()
         plt.plot(k_range, BIC, '-*b')
         plt.plot(k_range, AIC, '-xr')
         plt.plot(k_range, 2 * CVE, '-ok')
-        plt.legend(['BIC', 'AIC', 'Crossvalidation'])
+        plt.legend(['BIC', 'AIC', 'CV (neg. log likelihood)'])
         plt.xlabel('K')
         plt.show()
 
