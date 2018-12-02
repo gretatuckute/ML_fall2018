@@ -295,7 +295,7 @@ class GMM:
         :param metric: Dissimilarity measure, default 'euclidian'
         """
         print('Clustering object initialized')
-        self.X = X_pca
+        self.X = X
         self.y = y
         self.AttributeNames = AttributeNames
         self.classNames = classNames
